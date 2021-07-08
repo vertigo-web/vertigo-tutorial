@@ -1,0 +1,45 @@
+[env]
+PROFILE="dev"
+
+[env.profiling]
+PROFILE="profiling"
+
+[env.release]
+PROFILE="release"
+
+[tasks.watch]
+command = "cargo"
+args = [ "watch", "--watch", "./src", "--delay", "0.5", "-x", "make start --profile ${PROFILE}" ]
+
+[tasks.clean-build]
+script = "rm -Rf ./build"
+
+[tasks.clean]
+dependencies = [ "clean-build" ]
+
+[tasks.build-app]
+install_script = '''
+    if [ "$(rustup target list | grep wasm32-unknown-unknown | grep installed)" = "" ];
+    then
+        rustup target add wasm32-unknown-unknown;
+    fi
+'''
+install_crate = { crate_name = "wasm-pack", binary = "wasm-pack", test_arg = ["--version"] }
+script = [
+    "wasm-pack build . --no-typescript --target web --out-dir build --out-name my_app --${PROFILE}",
+    "cp ./src/index.html ./build",
+    "rm ./build/.gitignore ./build/package.json ./build/README.md",
+    "du -sh ./build",
+]
+
+[tasks.serve]
+install_crate = { crate_name = "basic-http-server", binary = "basic-http-server", test_arg = ["--version"] }
+command = "basic-http-server"
+args = [ "--addr", "127.0.0.1:3000", "./build" ]
+
+[tasks.start]
+dependencies = [
+    "clean-build",
+    "build-app",
+    "serve"
+]
