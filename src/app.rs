@@ -2,7 +2,7 @@ use vertigo::{
     computed::Computed,
     VDomElement,
 };
-use vertigo_html::{html, css_fn};
+use vertigo::{html, css_fn};
 
 use super::state::State;
 

@@ -1,20 +1,21 @@
 use std::cmp::PartialEq;
-use vertigo::computed::{Computed, Dependencies, Value};
+use vertigo::computed::{Computed, Value};
+use vertigo::Driver;
 
 #[derive(PartialEq)]
 pub struct State {
-    root: Dependencies,
+    driver: Driver,
 
     pub message: Value<String>,
 }
 
 impl State {
-    pub fn new(root: &Dependencies) -> Computed<State> {
+    pub fn new(driver: &Driver) -> Computed<State> {
         let state = State {
-            root: root.clone(),
-            message: root.new_value("Hello world".to_string()),
+            driver: driver.clone(),
+            message: driver.new_value("Hello world".to_string()),
         };
 
-        root.new_computed_from(state)
+        driver.new_computed_from(state)
     }
 }
