@@ -18,17 +18,22 @@ script = "rm -Rf ./build"
 dependencies = [ "clean-build" ]
 
 [tasks.build-app]
+dependencies = [
+    "clean-build",
+]
 install_script = '''
     if [ "$(rustup target list | grep wasm32-unknown-unknown | grep installed)" = "" ];
     then
         rustup target add wasm32-unknown-unknown;
     fi
 '''
-install_crate = { crate_name = "wasm-pack", binary = "wasm-pack", test_arg = ["--version"] }
 script = [
-    "wasm-pack build . --no-typescript --target web --out-dir build --out-name my_app --${PROFILE}",
+    "cargo build -p ${CARGO_MAKE_PROJECT_NAME} --release --target wasm32-unknown-unknown",
+    "mkdir -p ./build",
+    "cp ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/wasm32-unknown-unknown/release/wasm_run.js ./build/wasm_run.js",
+    "wasm-opt -Os --strip-debug -o ./build/${CARGO_MAKE_CRATE_FS_NAME}.wasm ${CARGO_MAKE_CRATE_TARGET_DIRECTORY}/wasm32-unknown-unknown/release/${CARGO_MAKE_CRATE_FS_NAME}.wasm",
     "cp ./src/index.html ./build",
-    "rm ./build/.gitignore ./build/package.json ./build/README.md",
+    "rm -Rf ./build/${CARGO_MAKE_CRATE_FS_NAME}_pre",
     "du -sh ./build",
 ]
 

@@ -9,10 +9,5 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-console_error_panic_hook = "0.1.7"
-vertigo = "0.1.0-beta.1"
-vertigo-browserdriver = "0.1.0-beta.1"
-wasm-bindgen = { version = "0.2.78" }
-wasm-bindgen-futures = "0.4.28"
-wasm-logger = "0.2.0"
-wee_alloc = "0.4.5"
+vertigo = "0.1.0-beta.3"
+vertigo-browserdriver = "0.1.0-beta.3"

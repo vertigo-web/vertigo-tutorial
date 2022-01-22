@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8"/>
         <script type="module">
-            import init from "/my_app.js";
-            init("/my_app_bg.wasm");
+            import { runModule } from "./wasm_run.js";
+            runModule("/my_app.wasm");
         </script>
     </head>
     <body></body>
