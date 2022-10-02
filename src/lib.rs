@@ -1,11 +1,10 @@
-use vertigo_browserdriver::start_browser_app;
-
-mod app;
+mod render;
 mod state;
 mod list;
 
+use vertigo::start_app;
+
 #[no_mangle]
 pub fn start_application() {
-    // Run component in rendering driver
-    start_browser_app(state::State::new, app::render);
+    start_app(state::State::component);
 }

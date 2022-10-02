@@ -1,26 +1,23 @@
-use std::cmp::PartialEq;
-use vertigo::{Driver, Computed, Value};
+use vertigo::{Value, DomElement};
 
+use crate::render::render;
 use crate::list;
 
-#[derive(PartialEq)]
+#[derive(Clone)]
 pub struct State {
-    driver: Driver,
-
     pub message: Value<String>,
     pub strong: Value<bool>,
-    pub list: Computed<list::State>,
+    pub list: list::State,
 }
 
 impl State {
-    pub fn new(driver: &Driver) -> Computed<State> {
+    pub fn component() -> DomElement {
         let state = State {
-            driver: driver.clone(),
-            message: driver.new_value("Hello world".to_string()),
-            strong: driver.new_value(true),
-            list: list::State::new(driver),
+            message: Value::new("Hello world".to_string()),
+            strong: Value::new(true),
+            list: list::State::new(),
         };
 
-        driver.new_computed_from(state)
+        render(&state)
     }
 }
