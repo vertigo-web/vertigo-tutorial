@@ -1,4 +1,4 @@
-use vertigo::{DomElement, css, Css, dom, Value, bind, bind2};
+use vertigo::{DomElement, css, Css, dom, Value, bind, transaction};
 
 pub struct List {
     pub items: Value<Vec<String>>,
@@ -9,14 +9,15 @@ impl List {
         let new_item = Value::<String>::default();
         let count = self.items.map(|items| items.len());
 
-        let add = bind2(&self.items, &new_item).call(|ctx, items, new_item| {
-            let mut items_vec = items.get(ctx).to_vec();
-            items_vec.push(new_item.get(ctx));
-            items.set(items_vec);
-            new_item.set("".to_string());
+        let items = self.items.clone();
+        let add = bind!(items, new_item, || {
+            transaction(|ctx| {
+                items.change(|items| items.push(new_item.get(ctx)));
+                new_item.set("".to_string());
+            });
         });
 
-        let change = bind(&new_item).call_param(|_ctx, new_item, new_value| {
+        let change = bind!(new_item, |new_value| {
             new_item.set(new_value);
         });
 

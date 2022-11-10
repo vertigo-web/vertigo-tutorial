@@ -26,10 +26,8 @@ fn app() -> DomElement {
         }
     );
 
-    let switch = bind(&strong).call(|ctx, strong|
-        strong.set(
-            !strong.get(ctx)
-        )
+    let switch = bind!(strong, ||
+        strong.change(|val| { *val = !*val; })
     );
 
     dom! {
