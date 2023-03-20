@@ -1,17 +1,44 @@
-use vertigo::{start_app, DomElement, Value, dom, css_fn};
+use vertigo::{bind, css, start_app, DomElement, dom, Value};
 
-css_fn! { main_div, "
-    color: darkblue;
-" }
+mod list;
+use list::List;
 
 fn app() -> DomElement {
-    let message = Value::new("Hello world!".to_string());
+    let message = Value::new("world!");
+    let strong = Value::new(true);
+
+    let my_items = Value::new(
+        vec![
+            "Item1".to_string(),
+            "Item2".to_string(),
+        ]
+    );
+
+    let message_element = strong.render_value(move |strong|
+        if strong {
+            dom! { <strong>{&message}</strong> }
+        } else {
+            dom! { <span>{&message}</span> }
+        }
+    );
+
+    let switch = bind!(strong, ||
+        strong.change(|val| { *val = !*val; })
+    );
+
+    let title_style = css!("
+        color: darkblue;
+    ");
 
     dom! {
-        <div css={main_div()}>
-            "Message to the world: "
-            { message }
-        </div>
+        <html>
+            <head />
+            <body>
+                <div css={title_style}>"Hello " {message_element}</div>
+                <button on_click={switch}>"Switch"</button>
+                <List items={my_items} />
+            </body>
+        </html>
     }
 }
 

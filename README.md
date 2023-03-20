@@ -1,26 +1,25 @@
-Vertigo App Template
-===================
+# Vertigo Tutorial Done
 
-This repository allows you to quickly start developing a vertigo application.
+This repository allows you to check the final outcome
+of the **[Vertigo TUTORIAL](https://github.com/vertigo-web/vertigo/blob/master/tutorial.md)**
 
-Using this template
---------------
+
+## Usage
 
 Make sure you're using nigthly version of rust:
+
 - `rustup default nightly`
 
-Install cargo-generate and cargo-make:
-- `cargo install cargo-generate cargo-make`
+Add target wasm32
 
-Bootstrap using cargo-generate:
-- `cargo generate https://github.com/vertigo-web/vertigo-app-template`
+- `rustup target add wasm32-unknown-unknown`
 
-Use cargo-make commands defined in Makefile:
-- `makers start` - Build app and start development http server at url http://localhost:3000/
-- `makers watch` - Rebuild and restart app at every change in code
-- `makers serve` - Start development server without rebuilding
+Install vertigo-cli:
 
-Different build profiles
---------------
-- `makers start --profile profiling`
-- `makers start --profile release`
+- `cargo install vertigo-cli --version=0.2.0-alpha`
+
+Use one of `vertigo` commands:
+
+- `vertigo build` - Build app
+- `vertigo serve` - Start app at http://localhost:4444/
+- `vertigo watch` - Rebuild and serve app at every change in code
