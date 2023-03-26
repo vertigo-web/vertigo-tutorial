@@ -1,7 +1,7 @@
-use vertigo::{bind, component, css, DomElement, dom, transaction, Value};
+use vertigo::{bind, component, css, dom, transaction, Value};
 
 #[component]
-pub fn List(items: Value<Vec<String>>) -> DomElement {
+pub fn List(items: Value<Vec<String>>) {
     let new_item = Value::<String>::default();
 
     let add = bind!(items, new_item, || {

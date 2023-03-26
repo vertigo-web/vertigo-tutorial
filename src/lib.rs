@@ -1,8 +1,9 @@
-use vertigo::{bind, css, start_app, DomElement, dom, Value};
+use vertigo::{main, bind, css, DomElement, dom, Value};
 
 mod list;
 use list::List;
 
+#[main]
 fn app() -> DomElement {
     let message = Value::new("world!");
     let strong = Value::new(true);
@@ -40,9 +41,4 @@ fn app() -> DomElement {
             </body>
         </html>
     }
-}
-
-#[no_mangle]
-pub fn start_application() {
-    start_app(app);
 }
