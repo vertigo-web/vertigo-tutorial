@@ -1,11 +1,11 @@
-use vertigo::{main, bind, css, DomElement, dom, Value};
+use vertigo::{bind, css, DomNode, dom, main, Value};
 
 mod list;
 use list::List;
 
 #[main]
-fn app() -> DomElement {
-    let message = Value::new("world!");
+fn app() -> DomNode {
+    let message = Value::new("Hello world!".to_string());
     let strong = Value::new(true);
 
     let my_items = Value::new(

@@ -42,7 +42,7 @@ pub fn List(items: Value<Vec<String>>) {
 
     dom! {
         <div>
-        <p>"My list (" {count} ")"</p>
+            <p>"My list (" {count} ")"</p>
             <ol>
                 {elements}
             </ol>
