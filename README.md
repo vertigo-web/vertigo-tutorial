@@ -16,7 +16,7 @@ Add target wasm32
 
 Install vertigo-cli:
 
-- `cargo install vertigo-cli --version=0.2.0-alpha`
+- `cargo install vertigo-cli`
 
 Use one of `vertigo` commands:
 
