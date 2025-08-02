@@ -1,5 +1,5 @@
 [package]
-name = "my_app"
+name = "my-vertigo-app"
 version = "0.1.0"
 edition = "2021"
 
@@ -9,4 +9,8 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-vertigo = "0.7"
+vertigo = "0.8"
+
+[profile.release]
+lto = true
+opt-level = 'z'

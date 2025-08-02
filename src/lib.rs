@@ -1,11 +1,11 @@
-use vertigo::{bind, css, DomNode, dom, main, Value};
+use vertigo::{bind, dom, css, main, DomNode, Value};
 
 mod list;
 use list::List;
 
 #[main]
 fn app() -> DomNode {
-    let message = Value::new("Hello world!".to_string());
+    let message = Value::new("world!".to_string());
     let strong = Value::new(true);
 
     let my_items = Value::new(
@@ -23,7 +23,7 @@ fn app() -> DomNode {
         }
     );
 
-    let switch = bind!(strong, ||
+    let switch = bind!(strong, |_|
         strong.change(|val| { *val = !*val; })
     );
 

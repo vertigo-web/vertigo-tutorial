@@ -4,7 +4,7 @@ use vertigo::{bind, component, css, dom, transaction, Value};
 pub fn List(items: Value<Vec<String>>) {
     let new_item = Value::<String>::default();
 
-    let add = bind!(items, new_item, || {
+    let add = bind!(items, new_item, |_| {
         transaction(|ctx| {
             items.change(|items| items.push(new_item.get(ctx)));
             new_item.set("".to_string());
@@ -15,26 +15,18 @@ pub fn List(items: Value<Vec<String>>) {
         new_item.set(new_value);
     });
 
-    let alternate_rows = |excl: bool| {
-        let bg_color = if excl { "yellow" } else { "inherit" };
+    let alternate_rows = css!("
+        color: black;
 
-        css!("
-            color: black;
-            background: { bg_color };
-
-            :nth-child(odd) {
-                color: blue;
-            };
-        ")
-    };
+        :nth-child(odd) {
+            color: blue;
+        };
+    ");
 
     let elements = items.render_list(
         |item| item.clone(),
-        move |item| {
-            let excl = item.ends_with('!');
-            dom! {
-                <li css={alternate_rows(excl)}>{item}</li>
-            }
+        move |item| dom! {
+            <li css={alternate_rows.clone()}>{item}</li>
         },
     );
 
